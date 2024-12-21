@@ -1,0 +1,81 @@
+<!-- header.component.html -->
+<header class="header">
+  <div class="header-container">
+    <!-- Main header content -->
+    <div class="main-header">
+      <!-- Logo -->
+      <div class="logo" (click)="closeMenu()">
+        <img src="../../../assets/images/Eshop-logo.png" alt="Eshop Logo" />
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        class="menu-toggle"
+        (click)="toggleMenu()"
+        [class.active]="isMenuOpen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" [class.mobile-open]="isMenuOpen">
+        <!-- Mobile Header -->
+        <div class="mobile-nav-header" *ngIf="isMenuOpen">
+          <div class="logo">
+            <img src="../../../assets/images/Eshop-logo.png" alt="Eshop Logo" />
+          </div>
+          <button class="close-menu" (click)="toggleMenu()">X</button>
+        </div>
+
+        <!-- Nav Links -->
+        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Collections</a>
+        <a href="#" class="nav-link">New Arrivals</a>
+        <a href="#" class="nav-link">About</a>
+      </nav>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search for products..."
+          class="search-input"
+        />
+        <button class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <button class="action-button cart-button">
+          <img src="../../../assets/images/cart.svg" alt="Cart" />
+          <span class="cart-count">0</span>
+        </button>
+
+        <div class="profile-dropdown">
+          <button class="action-button" (click)="toggleProfileDropdown()">
+            <img src="../../../assets/images/profile.svg" alt="Profile" />
+          </button>
+
+          <div class="dropdown-menu" *ngIf="isProfileDropdownOpen">
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-user"></i>
+              Profile
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-shopping-bag"></i>
+              Orders
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,260 @@
+<div class="auth-container">
+  <!-- Left Banner Section -->
+  <div class="banner-section">
+    <div class="banner-content">
+      <h1>Welcome to EShop</h1>
+      <p class="tagline">Your one-stop destination for quality products</p>
+      <div class="features">
+        <div class="feature">
+          <span class="feature-icon">🛍️</span>
+          <p>Wide range of products</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">🚚</span>
+          <p>Fast & secure delivery</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">💰</span>
+          <p>Best deals & offers</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Auth Section -->
+  <div class="auth-section">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <span class="logo-icon">🛍️</span>
+          <span class="logo-text">EShop</span>
+        </div>
+        <h2 class="auth-title">
+          {{ isLoginMode ? "Welcome Back!" : "Create Account" }}
+        </h2>
+        <p class="auth-subtitle">
+          {{
+            isLoginMode
+              ? "Sign in to continue shopping"
+              : "Join us for amazing deals"
+          }}
+        </p>
+      </div>
+
+      <!-- Login Form -->
+      <form
+        *ngIf="isLoginMode"
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()"
+        class="auth-form"
+      >
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-icon">📧</span>
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="Enter your email"
+                [ngClass]="{ invalid: isFieldInvalid('email', loginForm) }"
+              />
+            </div>
+            <div
+              class="error-message"
+              *ngIf="isFieldInvalid('email', loginForm)"
+            >
+              <span *ngIf="hasError('email', 'required', loginForm)"
+                >Email is required</span
+              >
+              <span
+                *ngIf="
+                  hasError('email', 'email', loginForm) ||
+                  hasError('email', 'pattern', loginForm)
+                "
+              >
+                Please enter a valid email
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-icon">🔒</span>
+              <input
+                type="password"
+                formControlName="password"
+                placeholder="Enter your password"
+                [ngClass]="{ invalid: isFieldInvalid('password', loginForm) }"
+              />
+            </div>
+            <div
+              class="error-message"
+              *ngIf="isFieldInvalid('password', loginForm)"
+            >
+              <span *ngIf="hasError('password', 'required', loginForm)"
+                >Password is required</span
+              >
+              <span *ngIf="hasError('password', 'minlength', loginForm)">
+                Password must be at least 6 characters
+              </span>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn">
+          <span>Sign In</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </form>
+
+      <!-- Registration Form -->
+      <form
+        *ngIf="!isLoginMode"
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+        class="auth-form"
+      >
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <div class="input-group">
+              <span class="input-icon">👤</span>
+              <input
+                type="text"
+                formControlName="name"
+                placeholder="Enter your full name"
+                [ngClass]="{ invalid: isFieldInvalid('name', registerForm) }"
+              />
+            </div>
+            <div
+              class="error-message"
+              *ngIf="isFieldInvalid('name', registerForm)"
+            >
+              <span *ngIf="hasError('name', 'required', registerForm)"
+                >Name is required</span
+              >
+              <span *ngIf="hasError('name', 'minlength', registerForm)">
+                Name must be at least 3 characters
+              </span>
+              <span *ngIf="hasError('name', 'pattern', registerForm)"
+                >Name can only contain letters</span
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-icon">📧</span>
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="Enter your email"
+                [ngClass]="{ invalid: isFieldInvalid('email', registerForm) }"
+              />
+            </div>
+            <div
+              class="error-message"
+              *ngIf="isFieldInvalid('email', registerForm)"
+            >
+              <span *ngIf="hasError('email', 'required', registerForm)"
+                >Email is required</span
+              >
+              <span
+                *ngIf="
+                  hasError('email', 'email', registerForm) ||
+                  hasError('email', 'pattern', registerForm)
+                "
+              >
+                Please enter a valid email
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group flex-1">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-icon">🔒</span>
+              <input
+                type="password"
+                formControlName="password"
+                placeholder="Create password"
+                [ngClass]="{
+                  invalid: isFieldInvalid('password', registerForm)
+                }"
+              />
+            </div>
+            <div
+              class="error-message"
+              *ngIf="isFieldInvalid('password', registerForm)"
+            >
+              <span *ngIf="hasError('password', 'required', registerForm)"
+                >Password is required</span
+              >
+              <span *ngIf="hasError('password', 'minlength', registerForm)">
+                Password must be at least 6 characters
+              </span>
+              <span *ngIf="hasError('password', 'pattern', registerForm)">
+                Password must contain at least one uppercase letter, one
+                lowercase letter, and one number
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group flex-1">
+            <label class="form-label">Confirm Password</label>
+            <div class="input-group">
+              <span class="input-icon">🔒</span>
+              <input
+                type="password"
+                formControlName="confirmPassword"
+                placeholder="Confirm password"
+                [ngClass]="{ 'invalid': isFieldInvalid('confirmPassword', registerForm) || registerForm.errors?.['mismatch'] }"
+              />
+            </div>
+            <div
+              class="error-message"
+              *ngIf="isFieldInvalid('confirmPassword', registerForm) || registerForm.errors?.['mismatch']"
+            >
+              <span
+                *ngIf="hasError('confirmPassword', 'required', registerForm)"
+              >
+                Please confirm your password
+              </span>
+              <span *ngIf="registerForm.errors?.['mismatch']">
+                Passwords do not match
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="terms-checkbox">
+            <input type="checkbox" formControlName="policy" id="terms" />
+            <label for="terms"
+              >I agree to the <a href="#">Terms of Service</a> and
+              <a href="#">Privacy Policy</a></label
+            >
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span>Create Account</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p class="switch-mode">
+          {{
+            isLoginMode ? "Don't have an account?" : "Already have an account?"
+          }}
+          <a href="javascript:void(0)" (click)="toggleMode()">
+            {{ isLoginMode ? "Register here" : "Login here" }}
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<!-- banner.component.html -->
+<section
+  class="banner-container"
+  (mouseenter)="onSlideHover(true)"
+  (mouseleave)="onSlideHover(false)"
+>
+  <div
+    class="slides-wrapper"
+    [style.transform]="'translateX(' + -currentSlide * 100 + '%)'"
+  >
+    <div class="slide" *ngFor="let slide of slides; let i = index">
+      <div class="slide-content">
+        <div class="slide-text" [class.active]="currentSlide === i">
+          <span class="subtitle">{{ slide.subtitle }}</span>
+          <h2 class="title">{{ slide.title }}</h2>
+          <p class="description">{{ slide.description }}</p>
+          <button class="cta-button">{{ slide.buttonText }}</button>
+        </div>
+        <div class="slide-image">
+          <!-- Using placeholder for demo. Replace with actual images -->
+          <img src="{{ slide.image }}" [alt]="slide.title" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <button class="nav-button prev" (click)="prevSlide()">
+    <span class="arrow-icon"></span>
+  </button>
+  <button class="nav-button next" (click)="nextSlide()">
+    <span class="arrow-icon"></span>
+  </button>
+
+  <!-- Dots Navigation -->
+  <div class="dots-navigation">
+    <button
+      *ngFor="let slide of slides; let i = index"
+      class="dot"
+      [class.active]="currentSlide === i"
+      (click)="setSlide(i)"
+    ></button>
+  </div>
+</section>
