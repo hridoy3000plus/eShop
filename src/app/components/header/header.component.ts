@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -9,17 +9,18 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
   ) {}
 
-  isLoginMode:any;
+  isLoginMode: any;
   isMenuOpen = false;
   isProfileDropdownOpen = false;
-  authRoute: string = '';
+  currentUrl: string = '';
+  private routerSubscription: Subscription | undefined;
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -42,12 +43,23 @@ export class HeaderComponent implements OnInit {
     this.authService.currentUser$.subscribe((user) => {
       this.isLoginMode = user; // Update the currentUser variable in the component
     });
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd)) // Only respond to NavigationEnd events
-      .subscribe((event: NavigationEnd) => {
-        // Update the current route whenever the navigation ends
-        this.authRoute = event.urlAfterRedirects; // This gives the correct route after redirects
-        console.log('Current Route:', this.authRoute);  // Log or use the route
+    // Subscribing to the Router's events and filtering for NavigationEnd
+    this.routerSubscription = this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd) // Only pass NavigationEnd events
+      )
+      .subscribe((event) => {
+        // Explicitly cast the event to NavigationEnd
+        const navigationEndEvent = event as NavigationEnd;
+        this.currentUrl = navigationEndEvent.urlAfterRedirects;
+        // console.log('Current Route URL:', this.currentUrl);
       });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up the subscription to avoid memory leaks
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }

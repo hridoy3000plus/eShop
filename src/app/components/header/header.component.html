@@ -49,7 +49,7 @@
       </div>
 
       <!-- Header Actions -->
-      <div class="header-actions" >
+      <div class="header-actions" *ngIf="currentUrl !== '/auth'">
         <button class="action-button cart-button">
           <img src="../../../assets/images/cart.svg" alt="Cart" />
           <span class="cart-count">0</span>
