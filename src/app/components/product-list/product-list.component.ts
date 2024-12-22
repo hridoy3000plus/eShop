@@ -52,6 +52,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-product-list',
@@ -63,7 +64,7 @@ export class ProductListComponent implements OnInit {
   errorMessage: string = '';
   currentPosition = 0;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -96,5 +97,6 @@ export class ProductListComponent implements OnInit {
   addToCart(product: Product): void {
     console.log('Added to cart:', product);
     // Implement your cart logic here
+    this.toastService.show('Successfully added to cart!', 'success');
   }
 }

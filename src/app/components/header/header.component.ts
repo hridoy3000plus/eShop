@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-header',
@@ -6,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor() {}
+  constructor(private authService: AuthService, private toastService: ToastService) {}
 
   isMenuOpen = false;
   isProfileDropdownOpen = false;
@@ -21,6 +23,11 @@ export class HeaderComponent implements OnInit {
 
   closeMenu() {
     this.isMenuOpen = false;
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.toastService.show('Logged out successful!', 'success');
   }
 
   ngOnInit(): void {}
