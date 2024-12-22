@@ -1,0 +1,61 @@
+<!-- product-list.component.html -->
+<section class="product-section">
+  <h2 class="section-title">Featured Products</h2>
+
+  <div class="product-slider-container">
+    <button
+      class="slider-arrow left"
+      (click)="scroll('left')"
+      [disabled]="currentPosition === 0"
+    >
+      <span class="arrow-icon"></span>
+    </button>
+
+    <div class="product-slider-wrapper">
+      <div
+        class="product-list"
+        [style.transform]="'translateX(' + -currentPosition * 25 + '%)'"
+      >
+        <div class="product-card" *ngFor="let product of products">
+          <div class="product-image-container">
+            <img
+              [src]="product.image"
+              [alt]="product.title"
+              class="product-image"
+            />
+            <button class="add-to-cart-button" (click)="addToCart(product)">
+              <span class="cart-icon"></span>
+              Add to Cart
+            </button>
+          </div>
+
+          <div class="product-details">
+            <h3 class="product-title" [title]="product.title">
+              {{ product.title }}
+            </h3>
+            <div class="rating">
+              <div class="stars">
+                <span
+                  class="star"
+                  *ngFor="let star of generateStarArray(product.rating.rate)"
+                  [class.filled]="star === 1"
+                  >★</span
+                >
+              </div>
+              <span class="rating-count">({{ product.rating.count }})</span>
+            </div>
+            <div class="price">${{ product.price.toFixed(2) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="slider-arrow right"
+      (click)="scroll('right')"
+      [disabled]="currentPosition >= products.length - 4"
+    >
+      <span class="arrow-icon"></span>
+    </button>
+  </div>
+</section>
