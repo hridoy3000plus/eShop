@@ -49,13 +49,13 @@
       </div>
 
       <!-- Header Actions -->
-      <div class="header-actions">
+      <div class="header-actions" >
         <button class="action-button cart-button">
           <img src="../../../assets/images/cart.svg" alt="Cart" />
           <span class="cart-count">0</span>
         </button>
 
-        <div class="profile-dropdown">
+        <div class="profile-dropdown" *ngIf="isLoginMode; else elseBlock">
           <button class="action-button" (click)="toggleProfileDropdown()">
             <img src="../../../assets/images/profile.svg" alt="Profile" />
           </button>
@@ -75,6 +75,12 @@
             </a>
           </div>
         </div>
+
+        <ng-template #elseBlock>
+          <button class="action-button" [routerLink]="'/auth'">
+            <img src="../../../assets/images/login.png" alt="Profile" />
+          </button>
+        </ng-template>
       </div>
     </div>
   </div>
