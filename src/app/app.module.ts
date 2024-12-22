@@ -15,10 +15,11 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { BannerComponent } from './components/banner/banner.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastComponent } from './components/toast/toast.component';
+import { PriceSliderComponent } from './components/price-slider/price-slider.component';
 
 @NgModule({
   declarations: [
@@ -36,10 +37,12 @@ import { ToastComponent } from './components/toast/toast.component';
     FooterComponent,
     BannerComponent,
     ProductListComponent,
-    ToastComponent
+    ToastComponent,
+    PriceSliderComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule

@@ -40,13 +40,13 @@
       <div class="search-container">
         <input
           type="text"
+          [value]="searchTerm"
+          (input)="onSearch($event)"
           placeholder="Search for products..."
           class="search-input"
         />
-        <button class="search-button">
-          <i class="fas fa-search"></i>
-        </button>
       </div>
+
 
       <!-- Header Actions -->
       <div class="header-actions" *ngIf="currentUrl !== '/auth'">

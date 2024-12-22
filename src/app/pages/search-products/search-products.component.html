@@ -1,1 +1,163 @@
-<p>search-products works!</p>
+<!-- search-results.component.html -->
+<div class="search-results-container">
+  <!-- Filter Sidebar -->
+  <aside class="filters-sidebar">
+    <!-- Categories -->
+    <div class="filter-section">
+      <h3>Categories</h3>
+      <div class="category-list">
+        <label
+          *ngFor="let category of categories"
+          class="category-item"
+          [class.selected]="category === selectedCategory"
+        >
+          <input
+            type="radio"
+            [value]="category"
+            [checked]="category === selectedCategory"
+            (change)="onCategorySelect(category)"
+          />
+          <span class="radio-custom"></span>
+          <span class="category-name">{{ category }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Price Range -->
+    <div class="filter-section">
+      <h3>Price Range</h3>
+      <app-price-slider
+        [minPrice]="0"
+        [maxPrice]="maxPrice"
+        [step]="1"
+        (priceChange)="onPriceChange($event)"
+      ></app-price-slider>
+    </div>
+
+    <!-- Rating Filter -->
+    <div class="filter-section">
+      <h3>Rating</h3>
+      <div class="rating-list">
+        <div
+          *ngFor="let rating of [4, 3, 2]"
+          class="rating-item"
+          [class.selected]="selectedRating === rating"
+          (click)="onRatingSelect(rating)"
+        >
+          <div class="stars">
+            <span
+              *ngFor="let star of generateStarArray(rating)"
+              class="star"
+              [class.filled]="star"
+              >★</span
+            >
+            <span
+              *ngFor="let star of generateStarArray(5 - rating)"
+              class="star"
+              >★</span
+            >
+          </div>
+          <span class="rating-text">& Up</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset Filters -->
+    <button class="reset-filters-btn" (click)="resetFilters()">
+      Reset Filters
+    </button>
+  </aside>
+
+  <!-- Products Grid -->
+  <main class="products-section">
+    <!-- Results Header -->
+    <div class="products-header">
+      <h2>Search Results</h2>
+      <span class="results-count">{{ products.length }} products found</span>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-overlay" *ngIf="loading">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-message" *ngIf="error">
+      {{ error }}
+    </div>
+
+    <!-- No Results State -->
+    <div class="no-results" *ngIf="!loading && products.length === 0">
+      <h3>No products found</h3>
+      <p>Try adjusting your filters or search query</p>
+      <button class="clear-filters" (click)="resetFilters()">
+        Clear Filters
+      </button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" *ngIf="!loading && products.length > 0">
+        <div class="product-card" *ngFor="let product of getCurrentPageItems()">
+            <div class="product-image-container">
+              <img
+                [src]="product.image"
+                [alt]="product.title"
+                class="product-image"
+              />
+              <button class="add-to-cart-button" >
+                <span class="cart-icon"></span>
+                Add to Cart
+              </button>
+            </div>
+
+            <div class="product-details">
+              <h3 class="product-title" [title]="product.title">
+                {{ product.title }}
+              </h3>
+              <div class="rating">
+                <div class="stars">
+                  <span
+                    class="star"
+                    *ngFor="let star of generateStarArray(product.rating.rate)"
+                    [class.filled]="star === 1"
+                    >★</span
+                  >
+                </div>
+                <span class="rating-count">({{ product.rating.count }})</span>
+              </div>
+              <div class="price">${{ product.price.toFixed(2) }}</div>
+            </div>
+          </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button
+        class="page-button"
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)"
+      >
+        Previous
+      </button>
+
+      <div class="page-numbers">
+        <button
+          *ngFor="let page of getPaginationArray()"
+          class="page-number"
+          [class.active]="currentPage === page"
+          (click)="onPageChange(page)"
+        >
+          {{ page }}
+        </button>
+      </div>
+
+      <button
+        class="page-button"
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(currentPage + 1)"
+      >
+        Next
+      </button>
+    </div>
+  </main>
+</div>

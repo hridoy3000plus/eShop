@@ -1,0 +1,43 @@
+<!-- price-slider.component.html -->
+<div class="price-slider-container">
+  <div class="slider-track">
+    <div
+      class="slider-range"
+      [style.left]="minThumbPosition + '%'"
+      [style.width]="maxThumbPosition - minThumbPosition + '%'"
+    ></div>
+  </div>
+
+  <div class="slider-inputs">
+    <input
+      type="range"
+      class="range-input min"
+      [min]="minPrice"
+      [max]="maxPrice"
+      [step]="step"
+      [(ngModel)]="currentMinValue"
+      (input)="updateMinPrice($event)"
+    />
+
+    <input
+      type="range"
+      class="range-input max"
+      [min]="minPrice"
+      [max]="maxPrice"
+      [step]="step"
+      [(ngModel)]="currentMaxValue"
+      (input)="updateMaxPrice($event)"
+    />
+  </div>
+
+  <div class="price-values">
+    <div class="price-value">
+      <label>Min</label>
+      <span>${{ currentMinValue }}</span>
+    </div>
+    <div class="price-value">
+      <label>Max</label>
+      <span>${{ currentMaxValue }}</span>
+    </div>
+  </div>
+</div>

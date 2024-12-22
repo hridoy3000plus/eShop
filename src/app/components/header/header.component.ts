@@ -1,7 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  Subject,
+  Subscription,
+  takeUntil,
+} from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { SearchQueryService } from 'src/app/services/search-query.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -10,11 +18,22 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  private searchSubject = new Subject<string>();
+  private destroy$ = new Subject<void>();
+  searchTerm = '';
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
     private router: Router,
-  ) {}
+    private searchQueryService: SearchQueryService
+  ) {
+    // Handle debounced search
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((term) => {
+        this.searchTerm = term;
+      });
+  }
 
   isLoginMode: any;
   isMenuOpen = false;
@@ -28,6 +47,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleProfileDropdown() {
     this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
+  }
+
+  onSearch(event: Event): void {
+    const term = (event.target as HTMLInputElement).value;
+    this.searchSubject.next(term);
+
+    // if (this.searchTerm.trim()) {
+    // Update the search query in the service
+    this.searchQueryService.updateFilters({ query: this.searchTerm });
+
+    // Navigate to search results page with query param
+    this.router.navigate(['/search-products'], {
+      queryParams: { q: this.searchTerm },
+    });
+    // }
   }
 
   closeMenu() {
@@ -61,5 +95,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
+
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
