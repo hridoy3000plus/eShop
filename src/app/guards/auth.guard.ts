@@ -4,9 +4,7 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -15,13 +13,16 @@ import { AuthService } from '../services/auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): boolean {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
     if (this.authService.isAuthenticated()) {
       return true;
     }
 
     // Store the attempted URL for redirecting
-    this.authService.redirectUrl = this.router.url;
+    this.authService.redirectUrl = state.url;
     this.router.navigate(['/auth']);
     return false;
   }

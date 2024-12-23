@@ -38,7 +38,7 @@ import { PriceSliderComponent } from './components/price-slider/price-slider.com
     BannerComponent,
     ProductListComponent,
     ToastComponent,
-    PriceSliderComponent
+    PriceSliderComponent,
   ],
   imports: [
     BrowserModule,
