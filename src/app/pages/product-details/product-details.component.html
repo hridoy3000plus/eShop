@@ -1,1 +1,57 @@
-<p>product-details works!</p>
+<div class="product-container" *ngIf="product">
+  <div class="product-image-container">
+    <div class="image-wrapper">
+      <img [src]="product.image" [alt]="product.title" class="product-image" />
+    </div>
+  </div>
+
+  <div class="product-info">
+    <div class="category-badge">{{ product.category }}</div>
+    <h1 class="product-title">{{ product.title }}</h1>
+
+    <div class="product-rating">
+      <div class="stars">
+        <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]"> ★ </span>
+      </div>
+      <span class="rating">{{ product.rating.rate }}</span>
+      <span class="rating-count">({{ product.rating.count }} reviews)</span>
+    </div>
+
+    <div class="product-price">
+      <span class="currency">$</span>
+      <span class="amount">{{ product.price }}</span>
+    </div>
+
+    <p class="product-description">{{ product.description }}</p>
+
+    <div class="quantity-section">
+      <span class="quantity-label">Quantity:</span>
+      <div class="quantity-controls">
+        <button
+          (click)="decreaseQuantity(product.id)"
+          class="quantity-btn"
+          [disabled]="quantity <= 1"
+        >
+          -
+        </button>
+        <span class="quantity-value">{{ quantity }}</span>
+        <button
+          (click)="increaseQuantity(product.id)"
+          class="quantity-btn"
+          [disabled]="quantity >= 99"
+        >
+          +
+        </button>
+      </div>
+    </div>
+
+    <button
+      class="add-to-cart-btn"
+      (click)="addToCart()"
+      [class.success]="addedToCart"
+    >
+      <span *ngIf="!addedToCart">Add to Cart</span>
+      
+    </button>
+  </div>
+</div>

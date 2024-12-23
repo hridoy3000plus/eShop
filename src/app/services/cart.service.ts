@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../models/cart.model';
 import { Product } from '../models/product.model';
 import { AuthService } from './auth.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class CartService {
   cartItems$ = this.cartItems.asObservable();
   cartItemCount$ = this.cartItemCount.asObservable();
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private toastService: ToastService) {
     this.loadCart();
     // Listen to login/logout events
     this.authService.currentUser$.subscribe((user) => {
@@ -63,9 +64,15 @@ export class CartService {
     );
 
     if (existingItem) {
-      existingItem.quantity += quantity;
+      if(existingItem.quantity + quantity > 20) {
+        this.toastService.show('Out of stock!', 'info');
+      }else{
+        existingItem.quantity += quantity;
+        this.toastService.show('Item added to cart!', 'success');
+      }
     } else {
       currentItems.push({ product, quantity });
+      this.toastService.show('Item added to cart!', 'success');
     }
 
     this.cartItems.next(currentItems);
@@ -76,8 +83,10 @@ export class CartService {
   updateQuantity(productId: number, quantity: number) {
     const currentItems = this.cartItems.value;
     const item = currentItems.find((item) => item.product.id === productId);
-
-    if (item) {
+    if(quantity > 20) {
+      this.toastService.show('Out of stock!', 'info');
+    }
+    else if (item) {
       item.quantity = quantity;
       this.cartItems.next(currentItems);
       this.updateCartItemCount();

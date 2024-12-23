@@ -1,1 +1,19 @@
-<p>not-found works!</p>
+<!-- not-found.component.html -->
+<div class="not-found-container">
+  <div class="error-content">
+    <div class="error-code">404</div>
+    <p class="error-message">
+      Oops! The page you're looking for has vanished into the digital void.
+    </p>
+    <button class="home-btn" (click)="goHome()">
+      <span class="btn-icon">←</span>
+      Return Home
+    </button>
+  </div>
+  <div class="background-grid">
+    <div
+      class="grid-line"
+      *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+    ></div>
+  </div>
+</div>
