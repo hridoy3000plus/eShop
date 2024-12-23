@@ -9,6 +9,7 @@ import {
   takeUntil,
 } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 import { SearchQueryService } from 'src/app/services/search-query.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -25,7 +26,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private toastService: ToastService,
     private router: Router,
-    private searchQueryService: SearchQueryService
+    private searchQueryService: SearchQueryService,
+    private cartService: CartService
   ) {
     // Handle debounced search
     this.searchSubject
@@ -39,6 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isMenuOpen = false;
   isProfileDropdownOpen = false;
   currentUrl: string = '';
+  cartItemCount: number = 0;
   private routerSubscription: Subscription | undefined;
 
   toggleMenu() {
@@ -77,6 +80,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.currentUser$.subscribe((user) => {
       this.isLoginMode = user; // Update the currentUser variable in the component
     });
+    // Listen to cart item count updates in real-time
+    this.cartService.cartItemCount$.subscribe((count) => {
+      this.cartItemCount = count; // Update cart item count
+    });
     // Subscribing to the Router's events and filtering for NavigationEnd
     this.routerSubscription = this.router.events
       .pipe(
@@ -88,6 +95,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.currentUrl = navigationEndEvent.urlAfterRedirects;
         // console.log('Current Route URL:', this.currentUrl);
       });
+    // Subscribe to the search query observable
+    this.searchQueryService.getSearchQuery().subscribe((searchQuery) => {
+      this.searchTerm = searchQuery;
+    });
+    // Subscribe to cart items and update cartItemCount whenever the cart changes
+    this.cartService.cartItems$.subscribe((items) => {
+      this.cartItemCount = items.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+    });
   }
 
   ngOnDestroy(): void {

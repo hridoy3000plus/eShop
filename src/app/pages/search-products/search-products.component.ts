@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { debounceTime, Subject } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SearchQueryService } from 'src/app/services/search-query.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-search-products',
@@ -33,7 +35,9 @@ export class SearchProductsComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private cartService: CartService,
     private searchQueryService: SearchQueryService,
+    private toastService: ToastService,
     private route: ActivatedRoute
   ) {}
 
@@ -117,6 +121,11 @@ export class SearchProductsComponent implements OnInit {
   resetFilters(): void {
     this.searchQueryService.resetFilters();
     this.resetPagination();
+  }
+
+  addToCart(product: Product): void {
+    this.cartService.addToCart(product);
+    this.toastService.show('Item added to cart!', 'success');
   }
 
   // Pagination methods

@@ -30,7 +30,7 @@
         </div>
 
         <!-- Nav Links -->
-        <a href="#" class="nav-link">Home</a>
+        <a [routerLink]="'/'" class="nav-link">Home</a>
         <a href="#" class="nav-link">Collections</a>
         <a href="#" class="nav-link">New Arrivals</a>
         <a href="#" class="nav-link">About</a>
@@ -52,7 +52,7 @@
       <div class="header-actions" *ngIf="currentUrl !== '/auth'">
         <button class="action-button cart-button">
           <img src="../../../assets/images/cart.svg" alt="Cart" />
-          <span class="cart-count">0</span>
+          <span class="cart-count" *ngIf="cartItemCount">{{cartItemCount}}</span>
         </button>
 
         <div class="profile-dropdown" *ngIf="isLoginMode; else elseBlock">

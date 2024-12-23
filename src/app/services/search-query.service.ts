@@ -25,6 +25,8 @@ export class SearchQueryService {
     minRating: 0,
   });
 
+  private searchQuerySubject = new BehaviorSubject<string>('');
+
   private products$ = new BehaviorSubject<Product[]>([]);
 
   constructor(private productService: ProductService) {
@@ -95,6 +97,11 @@ export class SearchQueryService {
       maxPrice: 1000,
       minRating: 0,
     });
+    this.searchQuerySubject.next('');
+  }
+
+  getSearchQuery() {
+    return this.searchQuerySubject.asObservable(); // Expose the search query observable
   }
 
   getPriceRange(): Observable<{ min: number; max: number }> {
