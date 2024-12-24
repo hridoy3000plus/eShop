@@ -51,11 +51,6 @@
               [class.filled]="star"
               >★</span
             >
-            <span
-              *ngFor="let star of generateStarArray(5 - rating)"
-              class="star"
-              >★</span
-            >
           </div>
           <span class="rating-text">& Up</span>
         </div>
@@ -97,37 +92,42 @@
 
     <!-- Products Grid -->
     <div class="products-grid" *ngIf="!loading && products.length > 0">
-        <div class="product-card" *ngFor="let product of getCurrentPageItems()">
-            <div class="product-image-container">
-              <img
-                [src]="product.image"
-                [alt]="product.title"
-                class="product-image"
-              />
-              <button class="add-to-cart-button" (click)="addToCart(product)">
-                <span class="cart-icon"></span>
-                Add to Cart
-              </button>
-            </div>
-
-            <div class="product-details">
-              <h3 class="product-title" [title]="product.title">
-                {{ product.title }}
-              </h3>
-              <div class="rating">
-                <div class="stars">
-                  <span
-                    class="star"
-                    *ngFor="let star of generateStarArray(product.rating.rate)"
-                    [class.filled]="star === 1"
-                    >★</span
-                  >
-                </div>
-                <span class="rating-count">({{ product.rating.count }})</span>
-              </div>
-              <div class="price">${{ product.price.toFixed(2) }}</div>
-            </div>
+      <div class="product-card" *ngFor="let product of getCurrentPageItems()">
+        <div
+          (click)="navigateToDetails(product.id)"
+          class="product-image-container"
+        >
+          <img
+            [src]="product.image"
+            [alt]="product.title"
+            class="product-image"
+          />
+          <div (click)="$event.stopPropagation()">
+            <button class="add-to-cart-button" (click)="addToCart(product)">
+              <span class="cart-icon"></span>
+              Add to Cart
+            </button>
           </div>
+        </div>
+
+        <div (click)="navigateToDetails(product.id)" class="product-details">
+          <h3 class="product-title" [title]="product.title">
+            {{ product.title }}
+          </h3>
+          <div class="rating">
+            <div class="stars">
+              <span
+                class="star"
+                *ngFor="let star of generateStarArray(product.rating.rate)"
+                [class.filled]="star === 1"
+                >★</span
+              >
+            </div>
+            <span class="rating-count">({{ product.rating.count }})</span>
+          </div>
+          <div class="price">${{ product.price.toFixed(2) }}</div>
+        </div>
+      </div>
     </div>
 
     <!-- Pagination -->

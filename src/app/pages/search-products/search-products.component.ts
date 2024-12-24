@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, Subject } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
@@ -38,7 +38,8 @@ export class SearchProductsComponent implements OnInit {
     private cartService: CartService,
     private searchQueryService: SearchQueryService,
     private toastService: ToastService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -142,6 +143,10 @@ export class SearchProductsComponent implements OnInit {
 
   private resetPagination(): void {
     this.currentPage = 1;
+  }
+
+  navigateToDetails(productId: number): void {
+    this.router.navigate(['/product-details', productId]);
   }
 
   // Helper methods

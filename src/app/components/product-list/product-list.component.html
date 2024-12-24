@@ -17,19 +17,24 @@
         [style.transform]="'translateX(' + -currentPosition * 25 + '%)'"
       >
         <div class="product-card" *ngFor="let product of products">
-          <div class="product-image-container">
+          <div
+            (click)="navigateToDetails(product.id)"
+            class="product-image-container"
+          >
             <img
               [src]="product.image"
               [alt]="product.title"
               class="product-image"
             />
-            <button class="add-to-cart-button" (click)="addToCart(product)">
-              <span class="cart-icon"></span>
-              Add to Cart
-            </button>
+            <div (click)="$event.stopPropagation()">
+              <button class="add-to-cart-button" (click)="addToCart(product)">
+                <span class="cart-icon"></span>
+                Add to Cart
+              </button>
+            </div>
           </div>
 
-          <div class="product-details">
+          <div (click)="navigateToDetails(product.id)" class="product-details">
             <h3 class="product-title" [title]="product.title">
               {{ product.title }}
             </h3>
