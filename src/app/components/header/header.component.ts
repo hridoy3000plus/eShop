@@ -29,9 +29,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private searchQueryService: SearchQueryService,
     private cartService: CartService
   ) {
-    // Handle debounced search
     this.searchSubject
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+      .pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((term) => {
         this.searchTerm = term;
       });

@@ -15,7 +15,7 @@ export class ToastComponent implements OnInit, OnDestroy {
     this.toastSubscription = this.toastService.toast$.subscribe((toast) => {
       this.toast = toast;
       setTimeout(() => {
-        this.toast = null; // Hide the toast after 3 seconds (customizable)
+        this.toast = null; 
       }, 2000);
     });
   }

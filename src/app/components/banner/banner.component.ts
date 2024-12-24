@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.css']
+  styleUrls: ['./banner.component.css'],
 })
 export class BannerComponent implements OnInit, OnDestroy {
   currentSlide = 0;
@@ -15,22 +15,22 @@ export class BannerComponent implements OnInit, OnDestroy {
       subtitle: 'Discover the latest trends',
       description: 'Up to 40% off on selected items',
       buttonText: 'Shop Now',
-      image: '/assets/images/banner1.jpg'
+      image: '/assets/images/banner1.jpg',
     },
     {
       title: 'New Arrivals',
       subtitle: 'Exclusive Designer Collection',
       description: 'Free shipping on orders over $50',
       buttonText: 'Explore',
-      image: '/assets/images/banner2.jpg'
+      image: '/assets/images/banner2.jpg',
     },
     {
       title: 'Limited Edition',
       subtitle: 'Premium Quality',
       description: 'Special offers for premium members',
       buttonText: 'View Collection',
-      image: '/assets/images/banner3.jpg'
-    }
+      image: '/assets/images/banner3.jpg',
+    },
   ];
 
   ngOnInit() {
@@ -58,7 +58,8 @@ export class BannerComponent implements OnInit, OnDestroy {
   }
 
   prevSlide() {
-    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+    this.currentSlide =
+      (this.currentSlide - 1 + this.slides.length) % this.slides.length;
   }
 
   setSlide(index: number) {

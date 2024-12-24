@@ -85,7 +85,6 @@ export class AuthComponent implements OnInit {
     );
   }
 
-  // Helper methods for type-safe error checking
   hasError(controlName: string, errorName: string, form: FormGroup): boolean {
     const control = form.get(controlName);
     return control?.errors?.[errorName] ?? false;
@@ -102,7 +101,6 @@ export class AuthComponent implements OnInit {
       : { mismatch: true };
   }
 
-  // Get control helper methods
   getControl(controlName: string, form: FormGroup): AbstractControl | null {
     return form.get(controlName);
   }

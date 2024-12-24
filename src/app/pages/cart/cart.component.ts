@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
   }
 
   getTotal(): number {
-    return this.getSubtotal(); // Since shipping is free, total equals subtotal
+    return this.getSubtotal(); 
   }
 
   proceedToCheckout(): void {

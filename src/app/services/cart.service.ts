@@ -54,7 +54,7 @@ export class CartService {
       (total, item) => total + item.quantity,
       0
     );
-    this.cartItemCount.next(totalItems); // Emit the new cart item count
+    this.cartItemCount.next(totalItems); 
   }
 
   addToCart(product: Product, quantity: number = 1) {
