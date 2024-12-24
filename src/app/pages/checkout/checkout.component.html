@@ -1,1 +1,98 @@
-<p>checkout works!</p>
+<div class="checkout-container">
+  <!-- Shipping Form -->
+  <div class="shipping-section">
+    <h2>Shipping Details</h2>
+    <form
+      [formGroup]="shippingForm"
+      (ngSubmit)="onSubmit()"
+      class="shipping-form"
+    >
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" formControlName="fullName" placeholder="John Doe" />
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="john@example.com"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <input type="text" formControlName="address" placeholder="123 Street" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" formControlName="city" placeholder="City" />
+        </div>
+
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" formControlName="state" placeholder="State" />
+        </div>
+
+        <div class="form-group">
+          <label>ZIP Code</label>
+          <input type="text" formControlName="zipCode" placeholder="12345" />
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="order-summary">
+    <h2>Order Summary</h2>
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let item of cartItems">
+        <img [src]="item.product.image" [alt]="item.product.title" />
+        <div class="item-details">
+          <h3>{{ item.product.title }}</h3>
+          <p class="quantity">Qty: {{ item.quantity }}</p>
+          <p class="price">
+            ${{ item.product.price * item.quantity | number : "1.2-2" }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="total-section">
+      <div class="subtotal">
+        <span>Subtotal</span>
+        <span>${{ getTotal() | number : "1.2-2" }}</span>
+      </div>
+      <div class="shipping">
+        <span>Shipping</span>
+        <span>Free</span>
+      </div>
+      <div class="total">
+        <span>Total</span>
+        <span>${{ getTotal() | number : "1.2-2" }}</span>
+      </div>
+    </div>
+
+    <button
+      class="checkout-btn"
+      (click)="onSubmit()"
+      [disabled]="!shippingForm.valid"
+    >
+      Proceed to Payment
+    </button>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" *ngIf="showPaymentModal">
+  <div class="modal-content">
+    <h2>Payment Successful!</h2>
+    <p>Your order has been placed successfully.</p>
+    <button class="continue-btn" (click)="completePayment()">
+      Continue Shopping
+    </button>
+  </div>
+</div>

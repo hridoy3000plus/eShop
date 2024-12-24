@@ -74,6 +74,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onLogout() {
     this.authService.logout();
     this.toastService.show('Logged out successful!', 'success');
+    this.toggleProfileDropdown();
+    this.router.navigate(['/']);
+  }
+
+  onProfile() {
+    this.router.navigate(['/profile']);
+    this.toggleProfileDropdown();
   }
 
   ngOnInit(): void {

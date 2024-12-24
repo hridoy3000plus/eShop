@@ -20,6 +20,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { HttpClientModule } from '@angular/common/http';
 import { ToastComponent } from './components/toast/toast.component';
 import { PriceSliderComponent } from './components/price-slider/price-slider.component';
+import { ExtraSectionComponent } from './components/extra-section/extra-section.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { PriceSliderComponent } from './components/price-slider/price-slider.com
     ProductListComponent,
     ToastComponent,
     PriceSliderComponent,
+    ExtraSectionComponent,
   ],
   imports: [
     BrowserModule,

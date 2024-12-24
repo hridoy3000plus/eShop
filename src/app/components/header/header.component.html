@@ -31,9 +31,9 @@
 
         <!-- Nav Links -->
         <a [routerLink]="'/'" class="nav-link">Home</a>
-        <a href="#" class="nav-link">Collections</a>
-        <a href="#" class="nav-link">New Arrivals</a>
-        <a href="#" class="nav-link">About</a>
+        <a [routerLink]="'/search-products'" class="nav-link">Collections</a>
+        <a [routerLink]="'/search-products'" class="nav-link">New Arrivals</a>
+
       </nav>
 
       <!-- Search Bar -->
@@ -61,16 +61,10 @@
           </button>
 
           <div class="dropdown-menu" *ngIf="isProfileDropdownOpen">
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-user"></i>
+            <a class="dropdown-item" (click)="onProfile()">
               Profile
             </a>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-shopping-bag"></i>
-              Orders
-            </a>
-            <a href="#" class="dropdown-item" (click)="onLogout()">
-              <i class="fas fa-sign-out-alt"></i>
+            <a class="dropdown-item" (click)="onLogout()">
               Logout
             </a>
           </div>

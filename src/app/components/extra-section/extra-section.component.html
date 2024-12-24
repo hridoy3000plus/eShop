@@ -1,0 +1,18 @@
+<section class="services">
+  <div class="services-container">
+    <div class="service" *ngFor="let service of services">
+      <div class="service-inner">
+        <div class="icon-wrapper">
+          <div class="icon-circle">
+            <img class="img" src="../../../assets/images/section.svg"/>
+          </div>
+          <div class="icon-border"></div>
+        </div>
+        <div class="service-content">
+          <h3 class="service-title">{{ service.title }}</h3>
+          <p class="service-description">{{ service.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

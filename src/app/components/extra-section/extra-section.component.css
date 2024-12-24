@@ -1,0 +1,154 @@
+.services {
+    padding: 5rem 2rem;
+    background: white
+  }
+
+  .services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .service {
+    perspective: 1000px;
+  }
+
+  .service-inner {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-inner:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .service-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(66, 153, 225, 0.1) 0%, rgba(76, 81, 191, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .service-inner:hover::before {
+    opacity: 1;
+  }
+
+  .icon-wrapper {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 2rem;
+  }
+
+  .icon-circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: transform 0.3s ease;
+  }
+
+  .icon-border {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px dashed #4299e1;
+    border-radius: 50%;
+    animation: spin 20s linear infinite;
+  }
+
+  .service-inner:hover .icon-circle {
+    transform: scale(1.1);
+    background: #3182ce;
+  }
+
+  .icon-wrapper svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+    transition: transform 0.3s ease;
+  }
+
+  .img{
+    width: 80px;
+    height: 80px;
+  }
+
+  .service-inner:hover svg {
+    transform: scale(1.1);
+  }
+
+  .service-title {
+    color: #2d3748;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .service-description {
+    color: #718096;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .services {
+      padding: 3rem 1.5rem;
+    }
+
+    .services-container {
+      gap: 2rem;
+    }
+
+    .service-inner {
+      padding: 2rem 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .services-container {
+      grid-template-columns: 1fr;
+    }
+
+    .icon-wrapper {
+      width: 80px;
+      height: 80px;
+    }
+
+    .icon-wrapper svg {
+      width: 32px;
+      height: 32px;
+    }
+  }

@@ -14,7 +14,7 @@
           <span class="subtitle">{{ slide.subtitle }}</span>
           <h2 class="title">{{ slide.title }}</h2>
           <p class="description">{{ slide.description }}</p>
-          <button class="cta-button">{{ slide.buttonText }}</button>
+          <button [routerLink]="'/search-products'" class="cta-button">{{ slide.buttonText }}</button>
         </div>
         <div class="slide-image">
           <!-- Using placeholder for demo. Replace with actual images -->

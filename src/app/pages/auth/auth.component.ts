@@ -77,7 +77,7 @@ export class AuthComponent implements OnInit {
           ],
         ],
         confirmPassword: ['', Validators.required],
-        policy: ['', Validators.required],
+        policy: [false, Validators.requiredTrue],
       },
       {
         validator: this.passwordMatchValidator,

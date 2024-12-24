@@ -102,9 +102,8 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="submit-btn">
+        <button [disabled]="!loginForm.valid" type="submit" class="submit-btn">
           <span>Sign In</span>
-          <span class="btn-icon">→</span>
         </button>
       </form>
 
@@ -239,9 +238,8 @@
           </div>
         </div>
 
-        <button type="submit" class="submit-btn">
+        <button [disabled]="!registerForm.valid" type="submit" class="submit-btn">
           <span>Create Account</span>
-          <span class="btn-icon">→</span>
         </button>
       </form>
 
