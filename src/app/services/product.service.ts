@@ -1,5 +1,3 @@
-
-
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, catchError, map } from 'rxjs';
@@ -23,15 +21,15 @@ export class ProductService {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl).pipe(
-      catchError(this.handleError(this.fallbackProducts))
-    );
+    return this.http
+      .get<Product[]>(this.apiUrl)
+      .pipe(catchError(this.handleError(this.fallbackProducts)));
   }
 
   getProduct(id: number): Observable<Product | undefined> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`).pipe(
       catchError(() => {
-        const product = this.fallbackProducts.find(p => p.id === id);
+        const product = this.fallbackProducts.find((p) => p.id === id);
         return of(product);
       })
     );
@@ -40,7 +38,9 @@ export class ProductService {
   getCategories(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/categories`).pipe(
       catchError(() => {
-        const categories = [...new Set(this.fallbackProducts.map(p => p.category))];
+        const categories = [
+          ...new Set(this.fallbackProducts.map((p) => p.category)),
+        ];
         return of(categories);
       })
     );
@@ -49,7 +49,9 @@ export class ProductService {
   getProductsByCategory(category: string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/category/${category}`).pipe(
       catchError(() => {
-        const products = this.fallbackProducts.filter(p => p.category === category);
+        const products = this.fallbackProducts.filter(
+          (p) => p.category === category
+        );
         return of(products);
       })
     );
@@ -100,7 +102,9 @@ export class ProductService {
     return this.getProducts().pipe(
       map((products) =>
         [...products].sort((a, b) =>
-          ascending ? a.rating.rate - b.rating.rate : b.rating.rate - a.rating.rate
+          ascending
+            ? a.rating.rate - b.rating.rate
+            : b.rating.rate - a.rating.rate
         )
       )
     );
