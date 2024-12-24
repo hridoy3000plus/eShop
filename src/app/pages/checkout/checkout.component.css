@@ -64,6 +64,35 @@ input:focus {
   overflow-y: auto;
 }
 
+.required {
+  color: #e74c3c;
+  margin-left: 2px;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Update existing input styles */
+input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+input.ng-touched.ng-invalid {
+  border-color: #e74c3c;
+}
+
 .cart-item {
   display: flex;
   gap: 1rem;
