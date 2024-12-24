@@ -43,7 +43,7 @@
   cursor: pointer;
   pointer-events: auto;
   -webkit-appearance: none;
-  margin-top: -6px;
+  margin-top: -24px;
   border: 2px solid white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
